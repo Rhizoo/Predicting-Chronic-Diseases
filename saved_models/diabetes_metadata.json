@@ -1,0 +1,49 @@
+{
+  "disease": "diabetes",
+  "best_model": "LightGBM",
+  "accuracy": 0.924,
+  "auc": 0.9754115017272911,
+  "feature_names": [
+    "hba1c",
+    "glucose",
+    "age",
+    "physical_activity_hours",
+    "diastolic_bp",
+    "systolic_bp",
+    "bmi",
+    "cholesterol",
+    "creatinine",
+    "glucose_hba1c_ratio",
+    "mean_arterial_pressure",
+    "bmi_age_interaction",
+    "family_history",
+    "alcohol_consumption",
+    "smoking_status"
+  ],
+  "all_results": {
+    "Logistic Regression": {
+      "accuracy": 0.814,
+      "auc": 0.9176110755058123
+    },
+    "Decision Tree": {
+      "accuracy": 0.896,
+      "auc": 0.9026125605072974
+    },
+    "Random Forest": {
+      "accuracy": 0.922,
+      "auc": 0.9685804948962844
+    },
+    "SVM": {
+      "accuracy": 0.798,
+      "auc": 0.9043137990506411
+    },
+    "XGBoost": {
+      "accuracy": 0.924,
+      "auc": 0.9750519750519752
+    },
+    "LightGBM": {
+      "accuracy": 0.924,
+      "auc": 0.9754115017272911
+    }
+  }
+}

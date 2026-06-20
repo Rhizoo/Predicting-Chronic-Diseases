@@ -1,0 +1,50 @@
+{
+  "disease": "kidney_disease",
+  "best_model": "LightGBM",
+  "accuracy": 0.9,
+  "auc": 0.949737979023945,
+  "feature_names": [
+    "systolic_bp",
+    "age",
+    "diastolic_bp",
+    "glucose",
+    "physical_activity_hours",
+    "hba1c",
+    "cholesterol",
+    "creatinine",
+    "mean_arterial_pressure",
+    "bmi",
+    "pulse_pressure",
+    "glucose_hba1c_ratio",
+    "bmi_age_interaction",
+    "smoking_status",
+    "cholesterol_bmi_interaction",
+    "alcohol_consumption"
+  ],
+  "all_results": {
+    "Logistic Regression": {
+      "accuracy": 0.838,
+      "auc": 0.8973697263336472
+    },
+    "Decision Tree": {
+      "accuracy": 0.855,
+      "auc": 0.8414575411002725
+    },
+    "Random Forest": {
+      "accuracy": 0.894,
+      "auc": 0.9459855798606868
+    },
+    "SVM": {
+      "accuracy": 0.828,
+      "auc": 0.8927690836813768
+    },
+    "XGBoost": {
+      "accuracy": 0.893,
+      "auc": 0.9449288697514934
+    },
+    "LightGBM": {
+      "accuracy": 0.9,
+      "auc": 0.949737979023945
+    }
+  }
+}

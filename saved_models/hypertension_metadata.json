@@ -1,0 +1,49 @@
+{
+  "disease": "hypertension",
+  "best_model": "LightGBM",
+  "accuracy": 0.873,
+  "auc": 0.9445583344722336,
+  "feature_names": [
+    "systolic_bp",
+    "diastolic_bp",
+    "age",
+    "mean_arterial_pressure",
+    "physical_activity_hours",
+    "hba1c",
+    "glucose",
+    "cholesterol",
+    "bmi",
+    "creatinine",
+    "pulse_pressure",
+    "alcohol_consumption",
+    "glucose_hba1c_ratio",
+    "smoking_status",
+    "bmi_age_interaction"
+  ],
+  "all_results": {
+    "Logistic Regression": {
+      "accuracy": 0.796,
+      "auc": 0.8651339599815752
+    },
+    "Decision Tree": {
+      "accuracy": 0.838,
+      "auc": 0.8303899088373599
+    },
+    "Random Forest": {
+      "accuracy": 0.869,
+      "auc": 0.9393725418735668
+    },
+    "SVM": {
+      "accuracy": 0.797,
+      "auc": 0.8720432883341178
+    },
+    "XGBoost": {
+      "accuracy": 0.868,
+      "auc": 0.9409037300249545
+    },
+    "LightGBM": {
+      "accuracy": 0.873,
+      "auc": 0.9445583344722336
+    }
+  }
+}

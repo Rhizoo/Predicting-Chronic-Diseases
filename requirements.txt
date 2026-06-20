@@ -1,0 +1,11 @@
+flask
+pandas
+numpy>=1.26
+scikit-learn
+xgboost
+lightgbm
+shap
+matplotlib
+seaborn
+joblib
+imbalanced-learn

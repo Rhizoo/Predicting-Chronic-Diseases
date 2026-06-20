@@ -1,0 +1,50 @@
+{
+  "disease": "heart_disease",
+  "best_model": "LightGBM",
+  "accuracy": 0.892,
+  "auc": 0.9568366228070175,
+  "feature_names": [
+    "age",
+    "systolic_bp",
+    "diastolic_bp",
+    "cholesterol",
+    "physical_activity_hours",
+    "glucose",
+    "hba1c",
+    "bmi",
+    "creatinine",
+    "smoking_status",
+    "mean_arterial_pressure",
+    "glucose_hba1c_ratio",
+    "pulse_pressure",
+    "bmi_age_interaction",
+    "family_history",
+    "cholesterol_bmi_interaction"
+  ],
+  "all_results": {
+    "Logistic Regression": {
+      "accuracy": 0.792,
+      "auc": 0.8829824561403509
+    },
+    "Decision Tree": {
+      "accuracy": 0.841,
+      "auc": 0.846702302631579
+    },
+    "Random Forest": {
+      "accuracy": 0.884,
+      "auc": 0.945734649122807
+    },
+    "SVM": {
+      "accuracy": 0.784,
+      "auc": 0.8797587719298245
+    },
+    "XGBoost": {
+      "accuracy": 0.895,
+      "auc": 0.9548793859649123
+    },
+    "LightGBM": {
+      "accuracy": 0.892,
+      "auc": 0.9568366228070175
+    }
+  }
+}

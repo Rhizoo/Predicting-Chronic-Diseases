@@ -1,0 +1,18 @@
+{
+  "creatinine": 3.336590605462736,
+  "systolic_bp": 1.7962637954186977,
+  "glucose": 1.6663204970699819,
+  "age": 1.3523460375024197,
+  "smoking_status": 1.0232758640431476,
+  "bmi": 0.6204258648050056,
+  "pulse_pressure": 0.2666738767372217,
+  "bmi_age_interaction": 0.232580605408972,
+  "physical_activity_hours": 0.22542101022494945,
+  "hba1c": 0.21560053067274343,
+  "cholesterol": 0.18782031431328514,
+  "diastolic_bp": 0.17080661490607296,
+  "mean_arterial_pressure": 0.158116620487888,
+  "cholesterol_bmi_interaction": 0.14803647604265918,
+  "alcohol_consumption": 0.1314549385444878,
+  "glucose_hba1c_ratio": 0.1217114922580564
+}

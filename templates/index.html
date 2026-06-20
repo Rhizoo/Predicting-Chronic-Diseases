@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-powered chronic disease prediction system using machine learning. Predict risk for Diabetes, Heart Disease, CKD, and Hypertension.">
+    <title>ChronoPredict — AI Disease Risk Predictor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- ─── Animated Background ─────────────────────────────────── -->
+    <div class="bg-gradient"></div>
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- ─── Navigation ──────────────────────────────────────────── -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">🧬</span>
+            <span class="nav-title">ChronoPredict</span>
+        </div>
+        <div class="nav-links">
+            <a href="#predict" class="nav-link active" data-section="predict">Predict</a>
+            <a href="#models" class="nav-link" data-section="models">Models</a>
+            <a href="#about" class="nav-link" data-section="about">About</a>
+            <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+                <span class="theme-toggle-icon" id="themeIcon">🌙</span>
+                <span class="theme-toggle-label" id="themeLabel">Dark</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ─── Hero Section ────────────────────────────────────────── -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">AI-Powered Healthcare</div>
+            <h1 class="hero-title">
+                Predict Chronic<br>
+                <span class="gradient-text">Disease Risk</span>
+            </h1>
+            <p class="hero-subtitle">
+                Advanced machine learning models analyze patient health data to predict
+                the likelihood of Diabetes, Heart Disease, CKD, and Hypertension with
+                explainable AI insights.
+            </p>
+            <a href="#predict" class="hero-cta">
+                Start Prediction
+                <span class="cta-arrow">→</span>
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-value">6</div>
+                <div class="stat-label">ML Models</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Diseases</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">85%+</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">SHAP</div>
+                <div class="stat-label">Explainable AI</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Prediction Section ──────────────────────────────────── -->
+    <section class="section" id="predict">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Disease Risk <span class="gradient-text">Prediction</span></h2>
+                <p class="section-desc">Select a disease type and enter patient health data for AI-powered risk analysis.</p>
+            </div>
+
+            <!-- Disease Selector Cards -->
+            <div class="disease-grid" id="diseaseGrid">
+                {% for disease in diseases %}
+                <div class="disease-card {% if loop.first %}active{% endif %}"
+                     data-disease="{{ disease }}" id="card-{{ disease }}">
+                    <div class="disease-icon">{{ disease_icons[disease] }}</div>
+                    <div class="disease-name">{{ disease_names[disease] }}</div>
+                    <div class="disease-check">✓</div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Patient Data Form -->
+            <form class="predict-form" id="predictForm">
+                <input type="hidden" id="selectedDisease" name="disease" value="diabetes">
+
+                <!-- Demographics -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="form-icon">👤</span> Demographics
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age">{{ feature_display_names['age'] }}</label>
+                            <input type="number" id="age" name="age" min="18" max="90" value="45" required>
+                            <div class="form-hint">18 – 90</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">{{ feature_display_names['gender'] }}</label>
+                            <select id="gender" name="gender" required>
+                                {% for opt in categorical_options['gender'] %}
+                                <option value="{{ opt }}">{{ opt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bmi">{{ feature_display_names['bmi'] }}</label>
+                            <input type="number" id="bmi" name="bmi" min="15" max="50" step="0.1" value="25.0" required>
+                            <div class="form-hint">15.0 – 50.0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vitals -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="form-icon">🩺</span> Clinical Measurements
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="systolic_bp">{{ feature_display_names['systolic_bp'] }}</label>
+                            <input type="number" id="systolic_bp" name="systolic_bp" min="80" max="200" value="120" required>
+                            <div class="form-hint">80 – 200</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="diastolic_bp">{{ feature_display_names['diastolic_bp'] }}</label>
+                            <input type="number" id="diastolic_bp" name="diastolic_bp" min="50" max="130" value="80" required>
+                            <div class="form-hint">50 – 130</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="glucose">{{ feature_display_names['glucose'] }}</label>
+                            <input type="number" id="glucose" name="glucose" min="60" max="300" value="100" required>
+                            <div class="form-hint">60 – 300</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cholesterol">{{ feature_display_names['cholesterol'] }}</label>
+                            <input type="number" id="cholesterol" name="cholesterol" min="100" max="400" value="200" required>
+                            <div class="form-hint">100 – 400</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hba1c">{{ feature_display_names['hba1c'] }}</label>
+                            <input type="number" id="hba1c" name="hba1c" min="4.0" max="14.0" step="0.1" value="5.5" required>
+                            <div class="form-hint">4.0 – 14.0</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="creatinine">{{ feature_display_names['creatinine'] }}</label>
+                            <input type="number" id="creatinine" name="creatinine" min="0.4" max="6.0" step="0.01" value="1.0" required>
+                            <div class="form-hint">0.4 – 6.0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lifestyle -->
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <span class="form-icon">🏃</span> Lifestyle & History
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="smoking_status">{{ feature_display_names['smoking_status'] }}</label>
+                            <select id="smoking_status" name="smoking_status" required>
+                                {% for opt in categorical_options['smoking_status'] %}
+                                <option value="{{ opt }}">{{ opt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alcohol_consumption">{{ feature_display_names['alcohol_consumption'] }}</label>
+                            <select id="alcohol_consumption" name="alcohol_consumption" required>
+                                {% for opt in categorical_options['alcohol_consumption'] %}
+                                <option value="{{ opt }}">{{ opt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="physical_activity_hours">{{ feature_display_names['physical_activity_hours'] }}</label>
+                            <input type="number" id="physical_activity_hours" name="physical_activity_hours"
+                                   min="0" max="20" step="0.5" value="3.0" required>
+                            <div class="form-hint">0 – 20 hrs/week</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="family_history">{{ feature_display_names['family_history'] }}</label>
+                            <select id="family_history" name="family_history" required>
+                                {% for opt in categorical_options['family_history'] %}
+                                <option value="{{ opt }}">{{ opt }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="predict-btn" id="predictBtn">
+                    <span class="btn-text">Analyze Risk</span>
+                    <span class="btn-loader" id="btnLoader"></span>
+                </button>
+            </form>
+
+            <!-- Results Panel -->
+            <div class="results-panel" id="resultsPanel" style="display:none;">
+                <div class="results-header">
+                    <h3 class="results-title">Prediction Results</h3>
+                    <div class="results-model" id="resultModel"></div>
+                </div>
+
+                <div class="results-grid">
+                    <!-- Risk Gauge -->
+                    <div class="result-card gauge-card">
+                        <div class="gauge-container">
+                            <svg class="gauge" viewBox="0 0 200 120">
+                                <path class="gauge-bg" d="M 20 100 A 80 80 0 0 1 180 100" />
+                                <path class="gauge-fill" id="gaugeFill" d="M 20 100 A 80 80 0 0 1 180 100" />
+                            </svg>
+                            <div class="gauge-value" id="gaugeValue">0%</div>
+                        </div>
+                        <div class="risk-label" id="riskLabel">Analyzing...</div>
+                        <div class="risk-disease" id="riskDisease"></div>
+                    </div>
+
+                    <!-- Contributing Factors -->
+                    <div class="result-card factors-card">
+                        <h4 class="card-title">Key Contributing Factors</h4>
+                        <div class="factors-list" id="factorsList"></div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer">
+                    ⚠️ This is a machine learning prediction for educational purposes only.
+                    Consult a healthcare professional for medical advice.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Model Comparison Section ────────────────────────────── -->
+    <section class="section section-dark" id="models">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Model <span class="gradient-text">Comparison</span></h2>
+                <p class="section-desc">Performance metrics across 6 ML algorithms for each disease.</p>
+            </div>
+
+            <div class="model-tabs" id="modelTabs">
+                {% for disease in diseases %}
+                <button class="model-tab {% if loop.first %}active{% endif %}"
+                        data-disease="{{ disease }}">
+                    {{ disease_icons[disease] }} {{ disease_names[disease] }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <div class="model-content" id="modelContent">
+                <div class="loading-state" id="modelLoading">
+                    <div class="spinner"></div>
+                    <p>Loading model metrics...</p>
+                </div>
+                <div class="model-table-wrap" id="modelTableWrap" style="display:none;">
+                    <table class="model-table" id="modelTable">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Accuracy</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1 Score</th>
+                                <th>ROC-AUC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modelTableBody"></tbody>
+                    </table>
+                    <div class="best-model-badge" id="bestModelBadge"></div>
+                </div>
+
+                <!-- Feature Importance Chart -->
+                <div class="feature-chart-wrap" id="featureChartWrap" style="display:none;">
+                    <h4 class="card-title">Feature Importance (SHAP)</h4>
+                    <canvas id="featureChart" width="600" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── About Section ───────────────────────────────────────── -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About <span class="gradient-text">ChronoPredict</span></h2>
+                <p class="section-desc">How the system works — from data to diagnosis.</p>
+            </div>
+
+            <div class="architecture-flow">
+                <div class="flow-step">
+                    <div class="flow-icon">📋</div>
+                    <div class="flow-title">Patient Data</div>
+                    <div class="flow-desc">Demographics, vitals, lifestyle factors</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">⚙️</div>
+                    <div class="flow-title">Preprocessing</div>
+                    <div class="flow-desc">Cleaning, encoding, scaling</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🔬</div>
+                    <div class="flow-title">Feature Engineering</div>
+                    <div class="flow-desc">Derived features, SMOTE balancing</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">🤖</div>
+                    <div class="flow-title">ML Model</div>
+                    <div class="flow-desc">Best of 6 algorithms</div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-icon">📊</div>
+                    <div class="flow-title">Prediction</div>
+                    <div class="flow-desc">Risk score + SHAP explanation</div>
+                </div>
+            </div>
+
+            <div class="algo-grid">
+                <div class="algo-card">
+                    <div class="algo-name">Logistic Regression</div>
+                    <div class="algo-desc">Baseline statistical classifier</div>
+                </div>
+                <div class="algo-card">
+                    <div class="algo-name">Decision Tree</div>
+                    <div class="algo-desc">Interpretable rule-based model</div>
+                </div>
+                <div class="algo-card">
+                    <div class="algo-name">Random Forest</div>
+                    <div class="algo-desc">Ensemble of decision trees</div>
+                </div>
+                <div class="algo-card">
+                    <div class="algo-name">SVM</div>
+                    <div class="algo-desc">Complex boundary classifier</div>
+                </div>
+                <div class="algo-card">
+                    <div class="algo-name">XGBoost</div>
+                    <div class="algo-desc">High-performance gradient boosting</div>
+                </div>
+                <div class="algo-card">
+                    <div class="algo-name">LightGBM</div>
+                    <div class="algo-desc">Efficient boosting framework</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Footer ──────────────────────────────────────────────── -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="nav-icon">🧬</span> ChronoPredict
+                </div>
+                <p class="footer-text">
+                    Predicting Chronic Diseases Using Machine Learning — Academic Project
+                </p>
+                <p class="footer-disclaimer">
+                    This tool is for educational and research purposes only. Not intended for clinical diagnosis.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
